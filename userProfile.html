@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="style.css">
+
+	<title>EyeCU Dashboard</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+            <svg id="logo" viewbox=-100,-100,200,200 id=svg style="width: 20%;">
+				<image id="user" x="-40" y="-40" width="80" height="80" href="./img/user.svg" />
+				<image id="checkmark" x="10" y="-60" width="40" height="40" href="./img/green_check.svg" />
+				<g id=bodies></g>
+				<g id=edges></g>
+			</svg><br>
+			<span class="text" id="logoText">EyeCU</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="#">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text" id="dashboard">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-camera-home' ></i>
+					<span class="text" id="myCamera">My Camera</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Activity Logs</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text" id="settings">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" id="logout">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<form action="#" style="visibility: hidden;">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">8</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="img/woman.png" id="miniProfile">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Settings</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<ul class="box-info" style="display: none;">
+				<li>
+					<i class='bx bxs-user' id="editUser"></i>
+					<span class="text">
+						<h3>Vi Nguyen</h3>
+                        <button class="user-edit-btn" id="showUploadBtn" onclick="showUpload()">Upload Photo</button>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>Sam Nguyen</h3>
+                        <div class="buttons">
+							<button class="user-edit-btn" type="submit">Edit Profile</button>
+                            <button class="subUser-remove-btn" type="submit">Remove Profile</button>
+						</div>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-add-to-queue' ></i>
+					<span class="text">
+						<h3>New User</h3>
+                        <button class="user-edit-btn" type="submit" >Add a Profile</button>
+					</span>
+				</li>
+			</ul>
+
+
+			<div class="table-data">
+				<div class="order" id="order">
+					<div class="picture-upload">
+                        <img src="img\user.png" class="img-container" id="chosenImage" style="margin-bottom: 1%;"><br>
+                        <figcaption id="fileName"></figcaption>
+                        <span class="text">
+                            <h3 style="margin-bottom: 1%; margin-top: .5%;">Vi Nguyen</h3>
+                        </span>
+                        <button class="upload-btn" type="submit" onclick="document.getElementById('uploadBtn').click()"><i class='bx bxs-camera-plus' style="font-size: large; vertical-align: middle;"></i> Upload Photo</button>
+                        <input id="uploadBtn" style="display: none;" type="file" accept="image/png, image/jpg">
+                    </div>
+					<div class="video-feature" id="videoFeature">
+					</div>
+				</div>
+			</div>
+			
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+   
+
+	<script src="script.js"></script>
+    <script src="script-settings.js"></script>
+</body>
+</html>

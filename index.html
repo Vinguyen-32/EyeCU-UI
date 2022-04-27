@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Hello, world!</title>
+    <style>
+        .center {
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+        }
+
+        .full-height {
+            height: 100vh;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 center full-height">
+                <svg id="logo" viewbox=-100,-100,200,200 id=svg style="width: 60%;">
+                    <image id="user" x="-40" y="-40" width="80" height="80" href="./img/user.svg" />
+                    <image id="checkmark" x="10" y="-60" width="40" height="40" href="./img/green_check.svg" />
+                    <g id=bodies></g>
+                    <g id=edges></g>  
+                </svg><br>
+
+                <h2 style="color: var(--blue); font-size: 3rem;">EyeCU</h2>
+            </div> 
+            <div class="col-6 center full-height">
+                <header>
+                    <div class="card">
+                        <h2>Log In</h2>
+                        <div class="form-group">
+                            <i class="fa fa-user"></i>
+                            <label>Username</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-lock"></i>
+                            <label>Password</label>
+                            <input type="password" required>
+                        </div>
+                        <button class="btn" type="submit">Login</button>
+                        <a href="#">Forgot Password</a>
+                    </div>
+                </header>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const SHUTTER_WING_COUNT = 8;
+
+        let r = 80,
+            arc = (x, y, s) => `A${r},${r},0,0,${s},${x},${y}`,
+            path = (i, d) => `<path transform='rotate(${i / +SHUTTER_WING_COUNT * 360})' ${d}></path>`;
+
+        function upd(val) {
+            console.log("val: " + val)
+            // Animate shutter
+            let step = Math.PI * (0.5 + 2 / +SHUTTER_WING_COUNT);
+            let p1x = Math.cos(step) * r;
+            let p1y = Math.sin(step) * r;
+            let cos = Math.cos(-val);
+            let sin = Math.sin(-val);
+            let c1x = p1x - cos * p1x - sin * p1y;
+            let c1y = p1y - cos * p1y + sin * p1x;
+            let dx = - sin * r - c1x;
+            let dy = r - cos * r - c1y;
+            let dc = Math.sqrt(dx * dx + dy * dy);
+            let a = Math.atan2(dy, dx) - Math.acos(dc / 2 / r);
+            let x = c1x + Math.cos(a) * r;
+            let y = c1y + Math.sin(a) * r;
+
+            let edge = `M${p1x},${p1y}${arc(0, r, 0)}${arc(x, y, 1)}`;
+            edges.innerHTML = bodies.innerHTML = '';
+            for (let i = 0; i < +SHUTTER_WING_COUNT; i++) {
+                edges.innerHTML += path(i, `fill=none stroke=white d='${edge}'`);
+                bodies.innerHTML += path(i, `fill=var(--dark-grey) d='${edge}${arc(p1x, p1y, 0)}'`);
+            }
+
+            // Animate user
+            user.style.opacity = (1 - val * 2);
+
+            // Animate check
+            checkmark.style.opacity = (1 - val * 8);
+        };
+
+        upd(0.5);
+
+
+        function handleMouseOver(e) {
+            var $this = $("#logo");
+            var offset = $this.offset();
+            var width = $this.width();
+            var height = $this.height();
+
+            var centerX = offset.left + width / 2;
+            var centerY = offset.top + height / 2;
+
+
+            let distance = Math.sqrt(Math.pow(e.x - centerX, 2) + Math.pow(e.y - centerY, 2));
+
+            upd(e.y / window.innerHeight * 1.04);
+
+            // upd( Math.min(1 - Math.min(1 - distance / width, 1), 1.04)  )
+        }
+
+        let logo = document.getElementById("logo");
+        addEventListener("mousemove", handleMouseOver)
+    </script>
+
+
+    <!---------Script for Sign In and Register--------->
+
+    <script>
+
+    </script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
